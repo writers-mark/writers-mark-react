@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { WritersMarkRaw } from './index';
+import { WritersMark } from './index';
 import '@testing-library/jest-dom';
 
 test('renders simple paragraph', () => {
-  render(<WritersMarkRaw content="hello" style="" />);
+  render(<WritersMark content="hello" style="" />);
   const pElement = screen.getByText(/hello/i);
   expect(pElement).toBeInTheDocument();
   expect(pElement).toBeInstanceOf(HTMLParagraphElement);
@@ -12,7 +12,7 @@ test('renders simple paragraph', () => {
 
 test('renders styled paragraph', () => {
   const content = 'yo\nhello';
-  render(<WritersMarkRaw content={content} style="p yo {color: red;}" />);
+  render(<WritersMark content={content} style="p yo {color: red;}" />);
   const pElement = screen.getByText(/hello/i);
 
   expect(pElement).toBeInTheDocument();
@@ -22,7 +22,7 @@ test('renders styled paragraph', () => {
 
 test('renders dual styled paragraph', () => {
   const content = 'yo\nsup\nhello';
-  render(<WritersMarkRaw content={content} style="p yo {color: red;} p sup {margin-left: 12px;}" />);
+  render(<WritersMark content={content} style="p yo {color: red;} p sup {margin-left: 12px;}" />);
   const pElement = screen.getByText(/hello/i);
 
   expect(pElement).toBeInTheDocument();
@@ -32,7 +32,7 @@ test('renders dual styled paragraph', () => {
 });
 
 test('renders simple span', () => {
-  render(<WritersMarkRaw content="hello *world*" style="s * {color: red;}" />);
+  render(<WritersMark content="hello *world*" style="s * {color: red;}" />);
 
   const helloElem = screen.getByText(/hello/i);
   expect(helloElem).toBeInTheDocument();

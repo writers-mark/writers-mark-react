@@ -10,15 +10,15 @@ On the flip side, this React-based renderer is meant to handle partial rewrites 
 
 ## Usage
 
-You most likely will want to use `WritersMarkRaw`, which consumes content and styling as raw strings.
+You most likely will want to use `WritersMark`, which consumes content and styling as raw strings.
 
 ```
-import {WritersMarkRaw} from 'writers-mark-react';
+import {WritersMark} from 'writers-mark-react';
 
 export const MyComponent = () {
   const text = 'Hello *World*';
   const format = 's * {font-weight: bold;}';
 
-  return <WritersMarkRaw content={text} style={format}/>
+  return <WritersMark content={text} style={format}/>
 } 
 ```
