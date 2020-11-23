@@ -45,7 +45,7 @@ export const WritersMark: React.FC<WritersMarkProps> = (props) => {
     const cleanup = wmd.render(text, containerRef.current!);
     return () => {
       cleanup();
-      if(containerRef.current) {
+      if (containerRef.current) {
         containerRef.current.innerHTML = '';
         containerRef.current.className = '';
       }

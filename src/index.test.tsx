@@ -28,7 +28,7 @@ test('renders dual styled paragraph', () => {
   const content = 'yo\nsup\nhello';
   render(
     <StyleProvider text="para yo {color: red;}">
-      <StyleProvider text="para sup {margin-left: 12px;}">
+      <StyleProvider text="para sup {margin: 12px;}">
         <WritersMark text={content} />
       </StyleProvider>
     </StyleProvider>,
@@ -39,7 +39,7 @@ test('renders dual styled paragraph', () => {
   expect(pElement).toBeInTheDocument();
   expect(pElement).toBeInstanceOf(HTMLParagraphElement);
   expect(getComputedStyle(pElement)).toHaveProperty('color', 'red');
-  expect(getComputedStyle(pElement)).toHaveProperty('margin-left', '12px');
+  expect(getComputedStyle(pElement)).toHaveProperty('margin', '12px');
 });
 
 test('renders simple span', () => {

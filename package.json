@@ -8,8 +8,8 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "writers-mark": "^0.5.1",
-    "writers-mark-dom": "^0.5.0"
+    "writers-mark": "^0.5.3",
+    "writers-mark-dom": "^0.5.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.7",
