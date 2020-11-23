@@ -40,9 +40,7 @@ N.B. Nothing stops you from having multiple `<StyleProvider>` in the same hierar
 
 ### Custom context
 
-If you want to specify the CSS whitelist, you can use `<ContextProvider>`:
-
-`<StyleProvider>` will apply the provided style to all its children.
+If you want to specify the CSS whitelist, or (eventually) other [writer's mark options](https://github.com/writers-mark/writers-mark-ts/blob/f1221c39100969d53c8d40e67ad23b7974b1e20a/src/index.ts#L39), you can use `<ContextProvider>`:
 
 ```
 import {WritersMark, StyleProvider, ContextProvider} from 'writers-mark-react';
