@@ -42,7 +42,12 @@ export const WritersMark: React.FC<WritersMarkProps> = (props) => {
 
   React.useEffect(() => {
     const text = ctx.compileText(props.text, styles);
-    return wmd.render(text, containerRef.current!);
+    const cleanup = wmd.render(text, containerRef.current!);
+    return () => {
+      cleanup();
+      containerRef.current!.innerHTML = '';
+      containerRef.current!.className = '';
+    };
   }, [props.text, styles]);
 
   return <div ref={containerRef}></div>;
