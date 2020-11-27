@@ -32,6 +32,7 @@ export const StyleProvider: React.FC<StyleProviderProps> = (props) => {
 ///////////////////////////
 interface WritersMarkProps {
   text: string;
+  title?: string;
 }
 
 /** Does a simple one-shot rendering. */
@@ -43,6 +44,9 @@ export const WritersMark: React.FC<WritersMarkProps> = (props) => {
   React.useEffect(() => {
     const text = ctx.compileText(props.text, styles);
     const iframe = wmd.render(text, containerRef.current!);
+    if(props.title) {
+      iframe.setAttribute('title', props.title);
+    }
     return () => {
       containerRef.current?.removeChild(iframe);
     };

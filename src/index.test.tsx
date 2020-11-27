@@ -1,26 +1,29 @@
 import * as React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen,getByText } from '@testing-library/react';
 import { WritersMark, StyleProvider, ContextProvider } from './index';
 import '@testing-library/jest-dom';
 
 test('renders simple paragraph', () => {
-  render(<WritersMark text="hello" />);
-  const pElement = screen.getByText(/hello/i);
+  render(<WritersMark title={"test"} text="hello"/>);
+  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+
+  const pElement = getByText(body, /hello/i);
   expect(pElement).toBeInTheDocument();
-  expect(pElement).toBeInstanceOf(HTMLParagraphElement);
 });
+
 
 test('renders styled paragraph', () => {
   const content = 'yo\nhello';
   render(
     <StyleProvider text="para yo {color: red;}">
-      <WritersMark text={content} />
+      <WritersMark title={"test"} text={content} />
     </StyleProvider>,
   );
-  const pElement = screen.getByText(/hello/i);
+  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+
+  const pElement = getByText(body, /hello/i);
 
   expect(pElement).toBeInTheDocument();
-  expect(pElement).toBeInstanceOf(HTMLParagraphElement);
   expect(getComputedStyle(pElement)).toHaveProperty('color', 'red');
 });
 
@@ -29,15 +32,15 @@ test('renders dual styled paragraph', () => {
   render(
     <StyleProvider text="para yo {color: red;}">
       <StyleProvider text="para sup {margin: 12px;}">
-        <WritersMark text={content} />
+        <WritersMark title={"test"} text={content} />
       </StyleProvider>
     </StyleProvider>,
   );
+  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
 
-  const pElement = screen.getByText(/hello/i);
+  const pElement = getByText(body, /hello/i);
 
   expect(pElement).toBeInTheDocument();
-  expect(pElement).toBeInstanceOf(HTMLParagraphElement);
   expect(getComputedStyle(pElement)).toHaveProperty('color', 'red');
   expect(getComputedStyle(pElement)).toHaveProperty('margin', '12px');
 });
@@ -45,17 +48,16 @@ test('renders dual styled paragraph', () => {
 test('renders simple span', () => {
   render(
     <StyleProvider text="span * {color: red;}">
-      <WritersMark text="hello *world*" />
+      <WritersMark title={"test"} text="hello *world*" />
     </StyleProvider>,
   );
+  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
 
-  const helloElem = screen.getByText(/hello/i);
+  const helloElem = getByText(body, /hello/i);
   expect(helloElem).toBeInTheDocument();
-  expect(helloElem).toBeInstanceOf(HTMLParagraphElement);
-
-  const worldElem = screen.getByText(/world/i);
+ 
+  const worldElem = getByText(body, /world/i);
   expect(worldElem).toBeInTheDocument();
-  expect(worldElem).toBeInstanceOf(HTMLSpanElement);
   expect(getComputedStyle(worldElem)).toHaveProperty('color', 'red');
 });
 
@@ -71,18 +73,17 @@ test('Custom whitelist', () => {
   render(
     <ContextProvider options={options}>
       <StyleProvider text="span * {font-weight: bold; color: red;}">
-        <WritersMark text="Hello *World*" />
+        <WritersMark title={"test"} text="Hello *World*" />
       </StyleProvider>
     </ContextProvider>,
   );
+  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
 
-  const helloElem = screen.getByText(/hello/i);
+  const helloElem = getByText(body, /hello/i);
   expect(helloElem).toBeInTheDocument();
-  expect(helloElem).toBeInstanceOf(HTMLParagraphElement);
 
-  const worldElem = screen.getByText(/world/i);
+  const worldElem = getByText(body, /world/i);
   expect(worldElem).toBeInTheDocument();
-  expect(worldElem).toBeInstanceOf(HTMLSpanElement);
   expect(getComputedStyle(worldElem)).toHaveProperty('color', 'red');
   expect(getComputedStyle(worldElem)).not.toHaveProperty('font-weight', 'bold');
 });
