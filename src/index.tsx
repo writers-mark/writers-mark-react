@@ -33,24 +33,34 @@ export const StyleProvider: React.FC<StyleProviderProps> = (props) => {
 interface WritersMarkProps {
   text: string;
   title?: string;
+  className?: string;
 }
 
 /** Does a simple one-shot rendering. */
 export const WritersMark: React.FC<WritersMarkProps> = (props) => {
   const ctx = React.useContext(WritersMarkContext);
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLIFrameElement>(null);
   const styles = React.useContext(WritersMarkStylingContext);
 
   React.useEffect(() => {
     const text = ctx.compileText(props.text, styles);
-    const iframe = wmd.render(text, containerRef.current!);
-    if(props.title) {
-      iframe.setAttribute('title', props.title);
-    }
+    const { styleElement } = wmd.dangerousRender(text, containerRef.current!.contentDocument!.body);
+
     return () => {
-      containerRef.current?.removeChild(iframe);
+      if (containerRef.current?.contentDocument) {
+        containerRef.current!.contentDocument!.head.removeChild(styleElement);
+        containerRef.current!.contentDocument!.body!.innerHTML = '';
+      }
     };
   }, [props.text, styles]);
 
-  return <div ref={containerRef}></div>;
+  return (
+    <iframe
+      className={props.className}
+      ref={containerRef}
+      title={props.title}
+      frameBorder={0}
+      sandbox={'allow-same-origin'}
+    ></iframe>
+  );
 };

@@ -1,25 +1,24 @@
 import * as React from 'react';
-import { render, screen,getByText } from '@testing-library/react';
+import { render, screen, getByText } from '@testing-library/react';
 import { WritersMark, StyleProvider, ContextProvider } from './index';
 import '@testing-library/jest-dom';
 
 test('renders simple paragraph', () => {
-  render(<WritersMark title={"test"} text="hello"/>);
-  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+  render(<WritersMark title={'test'} text="hello" />);
+  const body = (screen.getByTitle('test') as HTMLIFrameElement).contentDocument!.body;
 
   const pElement = getByText(body, /hello/i);
   expect(pElement).toBeInTheDocument();
 });
 
-
 test('renders styled paragraph', () => {
   const content = 'yo\nhello';
   render(
     <StyleProvider text="para yo {color: red;}">
-      <WritersMark title={"test"} text={content} />
+      <WritersMark title={'test'} text={content} />
     </StyleProvider>,
   );
-  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+  const body = (screen.getByTitle('test') as HTMLIFrameElement).contentDocument!.body;
 
   const pElement = getByText(body, /hello/i);
 
@@ -32,11 +31,11 @@ test('renders dual styled paragraph', () => {
   render(
     <StyleProvider text="para yo {color: red;}">
       <StyleProvider text="para sup {margin: 12px;}">
-        <WritersMark title={"test"} text={content} />
+        <WritersMark title={'test'} text={content} />
       </StyleProvider>
     </StyleProvider>,
   );
-  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+  const body = (screen.getByTitle('test') as HTMLIFrameElement).contentDocument!.body;
 
   const pElement = getByText(body, /hello/i);
 
@@ -48,14 +47,14 @@ test('renders dual styled paragraph', () => {
 test('renders simple span', () => {
   render(
     <StyleProvider text="span * {color: red;}">
-      <WritersMark title={"test"} text="hello *world*" />
+      <WritersMark title={'test'} text="hello *world*" />
     </StyleProvider>,
   );
-  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+  const body = (screen.getByTitle('test') as HTMLIFrameElement).contentDocument!.body;
 
   const helloElem = getByText(body, /hello/i);
   expect(helloElem).toBeInTheDocument();
- 
+
   const worldElem = getByText(body, /world/i);
   expect(worldElem).toBeInTheDocument();
   expect(getComputedStyle(worldElem)).toHaveProperty('color', 'red');
@@ -73,11 +72,11 @@ test('Custom whitelist', () => {
   render(
     <ContextProvider options={options}>
       <StyleProvider text="span * {font-weight: bold; color: red;}">
-        <WritersMark title={"test"} text="Hello *World*" />
+        <WritersMark title={'test'} text="Hello *World*" />
       </StyleProvider>
     </ContextProvider>,
   );
-  const body = (screen.getByTitle("test") as HTMLIFrameElement).contentDocument!.body;
+  const body = (screen.getByTitle('test') as HTMLIFrameElement).contentDocument!.body;
 
   const helloElem = getByText(body, /hello/i);
   expect(helloElem).toBeInTheDocument();
