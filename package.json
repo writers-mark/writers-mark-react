@@ -1,7 +1,7 @@
 {
   "name": "writers-mark-react",
   "homepage": "https://github.com/FrancoisChabot/writers-mark-react#readme",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "React Renderer for writers-mark",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
